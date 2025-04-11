@@ -1,38 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Discord Bot Dashboard</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
-<body class="p-5">
-    <h1 class="mb-4">Discord Bot Dashboard</h1>
-
-    <p>Status: <strong>{{ status }}</strong></p>
-
-    <form method="POST">
-        <div class="mb-3">
-            <label>Bot Token:</label>
-            <input type="text" name="token" class="form-control" required>
-        </div>
-
-        <div class="mb-3">
-            <label>Activity Type:</label>
-            <select name="activity_type" class="form-select">
-                <option value="playing">Playing</option>
-                <option value="streaming">Streaming</option>
-                <option value="listening">Listening</option>
-                <option value="watching">Watching</option>
-            </select>
-        </div>
-
-        <div class="mb-3">
-            <label>Activity Text:</label>
-            <input type="text" name="activity_text" class="form-control">
-        </div>
-
-        <button type="submit" name="action" value="start" class="btn btn-success">Start Bot</button>
-        <button type="submit" name="action" value="stop" class="btn btn-danger">Stop Bot</button>
-        <button type="submit" name="action" value="set_activity" class="btn btn-primary">Set Activity</button>
+<body>
+    <h1>Discord Bot Dashboard Login</h1>
+    <form id="login-form">
+        <input type="text" id="token" placeholder="Discord Token" required>
+        <button type="submit">Einloggen</button>
     </form>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const token = document.getElementById('token').value;
+            
+            // Sende das Token an den Backend-Server
+            const response = await fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ token })
+            });
+
+            if (response.ok) {
+                window.location.href = '/dashboard';
+            } else {
+                alert('Ungültiges Token!');
+            }
+        });
+    </script>
 </body>
 </html>
