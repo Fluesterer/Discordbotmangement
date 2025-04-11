@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bot Dashboard</title>
+</head>
+<body>
+    <h1>Discord Bot Dashboard</h1>
+    <button id="start-bot">Bot starten</button>
+    <button id="stop-bot">Bot stoppen</button>
+    <input type="text" id="activity" placeholder="Aktivität ändern">
+    <button id="change-activity">Aktivität ändern</button>
+
+    <script>
+        document.getElementById('start-bot').addEventListener('click', () => {
+            fetch('/start-bot', { method: 'POST' });
+        });
+
+        document.getElementById('stop-bot').addEventListener('click', () => {
+            fetch('/stop-bot', { method: 'POST' });
+        });
+
+        document.getElementById('change-activity').addEventListener('click', async () => {
+            const activity = document.getElementById('activity').value;
+            await fetch('/change-activity', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ activity })
+            });
+        });
+    </script>
+</body>
+</html>
